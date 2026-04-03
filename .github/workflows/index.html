@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure CI/CD Deployment</title>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #00ff41; /* Classic hacker green */
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Adds a subtle retro CRT monitor effect */
+        .scanlines {
+            position: absolute;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .terminal {
+            width: 85%;
+            max-width: 900px;
+            height: 65vh;
+            background: rgba(0, 15, 0, 0.85);
+            border: 1px solid #00ff41;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 0 25px rgba(0, 255, 65, 0.15);
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .terminal-header {
+            border-bottom: 1px dashed #00ff41;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        #output {
+            white-space: pre-wrap;
+            line-height: 1.6;
+            font-size: 1.1em;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background-color: #00ff41;
+            vertical-align: middle;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .success-text {
+            color: #ffffff;
+            text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="terminal">
+        <div class="terminal-header">
+            <span>Decentralized Node Initialization</span>
+            <span>ENV: PRODUCTION // ACTIVE</span>
+        </div>
+        <div id="output"></div><span class="cursor"></span>
+    </div>
+
+    <script>
+        // The text that will be "typed" out on the screen
+        const lines = [
+            "INITIALIZING SECURE BOOT SEQUENCE...",
+            "Mounting virtual filesystem... [OK]",
+            "Loading cryptographic hashes... [OK]",
+            "Verifying CIA triad integrity protocols... [OK]",
+            "Connecting to decentralized node network...",
+            "Node 1: ALIVE | Node 2: ALIVE | Node 3: ALIVE",
+            "Establishing secure medical record transfer channels...",
+            "Running automated CI/CD test suite... [PASS]",
+            "Deploying artifacts to production environment...",
+            "================================================",
+            "DEPLOYMENT SUCCESSFUL.",
+            "System is live and monitoring network traffic."
+        ];
+
+        const outputDiv = document.getElementById('output');
+        let currentLine = 0;
+        let currentChar = 0;
+
+        function typeWriter() {
+            if (currentLine < lines.length) {
+                if (currentChar < lines[currentLine].length) {
+                    // Type the next character
+                    outputDiv.innerHTML += lines[currentLine].charAt(currentChar);
+                    currentChar++;
+                    // Randomize typing speed for realism (10ms to 60ms)
+                    setTimeout(typeWriter, Math.random() * 50 + 10); 
+                } else {
+                    // Move to the next line
+                    outputDiv.innerHTML += '\n';
+                    currentLine++;
+                    currentChar = 0;
+                    
+                    // Add a realistic pause before starting the next line
+                    let lineDelay = 200;
+                    // Make it "think" longer on specific lines
+                    if (currentLine === 4 || currentLine === 6 || currentLine === 8) {
+                        lineDelay = 900;
+                    }
+                    
+                    setTimeout(typeWriter, lineDelay);
+                }
+            } else {
+                // Once finished, apply a glowing CSS effect to the success message
+                outputDiv.innerHTML = outputDiv.innerHTML.replace('DEPLOYMENT SUCCESSFUL.', '<span class="success-text">DEPLOYMENT SUCCESSFUL.</span>');
+            }
+        }
+
+        // Start the animation slightly after the page loads
+        setTimeout(typeWriter, 600);
+    </script>
+</body>
+</html>
